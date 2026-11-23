@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- 暫用圖示：logo 定案後換掉 -->
+<rect width="512" height="512" fill="#7C3AED"/>
+<circle cx="256" cy="256" r="150" fill="#D9822B"/>
+<circle cx="256" cy="256" r="118" fill="none" stroke="#F4B26A" stroke-width="14"/>
+<text x="256" y="300" text-anchor="middle" font-family="Microsoft JhengHei" font-weight="700" font-size="140" fill="#FFFFFF">小</text>
+</svg>
