@@ -25,7 +25,7 @@
   --sheet-shadow:0 -8px 30px rgba(40,10,80,.16);
   --font:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
-  --c-food:#2563EB; --c-transit:#0E7490; --c-shop:#BE185D; --c-fun:#A21CAF; --c-life:#8B5E3C; --c-home:#475569; --c-med:#65701F; --c-other:#78716C; --c-salary:#334155; --on-cat:#FFFFFF;
+  --c-food:#2563EB; --c-transit:#0E7490; --c-shop:#BE185D; --c-fun:#A21CAF; --c-life:#8B5E3C; --c-home:#475569; --c-sport:#4F5BB5; --c-med:#65701F; --c-other:#78716C; --c-salary:#334155; --on-cat:#FFFFFF;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -34,7 +34,7 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#6E78C8; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --page:#0E0B13; --bg:#14101B; --surface:#1E1828; --surface-2:#282133; --text:#F3EEFA; --muted:#A9A1B7; --line:#2F283B; --track:#342C40;
@@ -42,7 +42,7 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#6E78C8; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
   color-scheme:dark}
 
 /* ===== 基本 ===== */
@@ -245,6 +245,7 @@ const ICON = {
   fun:'<rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10.5v4M6 12.5h4M15.5 12h.01M17.5 14h.01"/>',
   life:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.8 10.6c.6.6.8 1.4.8 2.4h6c0-1 .2-1.8.8-2.4A6 6 0 0 0 12 3z"/>',
   home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
+  sport:'<path d="M6.5 7v10M3.5 9.5v5M17.5 7v10M20.5 9.5v5M6.5 12h11"/>',
   med:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/>',
   other:'<path d="M6 12h.01M12 12h.01M18 12h.01"/>',
   salary:'<rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/>',
@@ -258,14 +259,18 @@ const ICON = {
 };
 const ico = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICON[k] || ICON.other}</svg>`;
 
-/* ===== 分類（固定 8＋2 個）===== */
+/* ===== 分類（支出 9 個＋收入 2 個）=====
+   居住幾乎都是固定收支（房租、水電），不放首頁圓環旁（noRing）；
+   臨時記一筆居住，從「生活」記帳面板上方切換。 */
 const CATS = [
   {id:'food',n:'餐飲'},{id:'transit',n:'交通'},{id:'shop',n:'購物'},{id:'fun',n:'娛樂'},
-  {id:'life',n:'生活'},{id:'home',n:'居住'},{id:'med',n:'醫療'},{id:'other',n:'其他'}
+  {id:'life',n:'生活'},{id:'home',n:'居住',noRing:true},{id:'sport',n:'運動'},{id:'med',n:'醫療'},{id:'other',n:'其他'}
 ];
+const RING_CATS = CATS.filter(c => !c.noRing);
+const LIFE_PAIR = ['life', 'home'];
 const INCATS = [{id:'salary',n:'薪水'},{id:'other-in',n:'其他收入'}];
 const COL = id => `var(--c-${id === 'other-in' ? 'other' : id})`;
-const catOf = id => CATS.find(c => c.id === id) || INCATS.find(c => c.id === id) || CATS[7];
+const catOf = id => CATS.find(c => c.id === id) || INCATS.find(c => c.id === id) || CATS.find(c => c.id === 'other');
 const icoKey = id => id === 'other-in' ? 'other' : id;
 
 /* ===== 小工具 ===== */
@@ -288,7 +293,7 @@ const KEY = 'coinlet.v1';
 const DEFAULT_ITEMS = [
   {n:'早餐',c:'food',watch:false},{n:'午餐',c:'food',watch:false},{n:'晚餐',c:'food',watch:false},{n:'手搖',c:'food',watch:true},
   {n:'咖啡',c:'food',watch:true},{n:'外送',c:'food',watch:true},{n:'7-11',c:'food',watch:true},{n:'捷運',c:'transit',watch:false},
-  {n:'計程車',c:'transit',watch:false},{n:'網購',c:'shop',watch:true},{n:'電影',c:'fun',watch:false},{n:'藥局',c:'med',watch:false}
+  {n:'計程車',c:'transit',watch:false},{n:'網購',c:'shop',watch:true},{n:'電影',c:'fun',watch:false},{n:'健身房',c:'sport',watch:false},{n:'藥局',c:'med',watch:false}
 ];
 const blank = () => ({v:1, setupDone:false, startDate:null, budget:null, fixed:[], items:DEFAULT_ITEMS.map(x => ({...x})), entries:[], fixedDone:{}, theme:'system'});
 let D;
@@ -450,7 +455,7 @@ function todayHTML(){
   }
   const R = ringData(), t = todayStr();
   const pos = [[1,1],[2,1],[3,1],[1,2],[3,2],[1,3],[3,3],[2,4]];
-  const cats = CATS.map((c, i) => `<button type="button" class="rcat" data-pick="${c.id}" style="grid-column:${pos[i][0]};grid-row:${pos[i][1]}" aria-label="記一筆${c.n}"><span class="dot" style="background:${COL(c.id)}">${ico(c.id)}</span>${c.n}<span class="amtsm">${fmt(R.tot[c.id] || 0)}</span></button>`).join('');
+  const cats = RING_CATS.map((c, i) => `<button type="button" class="rcat" data-pick="${c.id}" style="grid-column:${pos[i][0]};grid-row:${pos[i][1]}" aria-label="記一筆${c.n}"><span class="dot" style="background:${COL(c.id)}">${ico(c.id)}</span>${c.n}<span class="amtsm">${fmt(R.tot[c.id] || 0)}</span></button>`).join('');
   const todays = D.entries.filter(e => e.date === t).sort((a, b) => b.time.localeCompare(a.time) || b.createdAt - a.createdAt);
   const todayOut = sum(todays.filter(e => e.type === 'out' && !e.fixedId));
   return `
@@ -472,7 +477,8 @@ function entrySheetHTML(){
   const ok = +E.amount > 0;
   return `<div class="entry-sheet">
     <div class="sheet-head"><span class="cathead"><span class="dot" style="background:${COL(c.id)}">${ico(icoKey(c.id))}</span>${E.type === 'in' ? '收入・' : ''}${c.n}</span><button type="button" class="iconbtn" data-act="close-sheet" aria-label="關閉">${ico('x')}</button></div>
-    ${E.type === 'in' ? `<div class="chips" role="group" aria-label="收入分類">${INCATS.map(x => `<button type="button" class="chip" data-incat="${x.id}" aria-pressed="${E.cat === x.id}">${x.n}</button>`).join('')}</div>` : ''}
+    ${E.type === 'in' ? `<div class="chips" role="group" aria-label="收入分類">${INCATS.map(x => `<button type="button" class="chip" data-incat="${x.id}" aria-pressed="${E.cat === x.id}">${x.n}</button>`).join('')}</div>`
+      : LIFE_PAIR.includes(E.cat) ? `<div class="chips" role="group" aria-label="生活或居住">${LIFE_PAIR.map(id => `<button type="button" class="chip" data-incat="${id}" aria-pressed="${E.cat === id}">${catOf(id).n}</button>`).join('')}</div>` : ''}
     <div class="amt"><input class="note" id="note" type="text" autocomplete="off" placeholder="備註，例如 ${E.type === 'in' ? '獎金 3000' : '午餐 120'}" value="${esc(E.note)}" aria-label="備註"><span class="val ${ok ? '' : 'zero'}" aria-live="polite">NT$ ${ok ? fmt(+E.amount) : '0'}</span></div>
     ${items.length ? `<div class="chips" role="group" aria-label="常用項目">${items.map(i => `<button type="button" class="chip item" data-item="${esc(i.n)}" aria-pressed="${E.item === i.n}">${esc(i.n)}</button>`).join('')}</div>` : ''}
     <div class="keys">${['1','2','3','4','5','6','7','8','9','00','0','del'].map(x => `<button type="button" data-key="${x}" aria-label="${x === 'del' ? '刪除一位' : x}">${x === 'del' ? ico('del') : x}</button>`).join('')}</div>
