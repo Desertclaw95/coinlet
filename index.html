@@ -25,7 +25,7 @@
   --sheet-shadow:0 -8px 30px rgba(40,10,80,.16);
   --font:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
-  --c-food:#2563EB; --c-transit:#0E7490; --c-shop:#BE185D; --c-fun:#A21CAF; --c-life:#8B5E3C; --c-home:#475569; --c-sport:#4F5BB5; --c-med:#65701F; --c-other:#78716C; --c-salary:#334155; --on-cat:#FFFFFF;
+  --c-food:#2563EB; --c-transit:#0E7490; --c-shop:#BE185D; --c-fun:#A21CAF; --c-life:#8B5E3C; --c-home:#475569; --c-sport:#2C7A78; --c-med:#65701F; --c-other:#78716C; --c-salary:#334155; --on-cat:#FFFFFF;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -34,7 +34,7 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#6E78C8; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#378A87; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --page:#0E0B13; --bg:#14101B; --surface:#1E1828; --surface-2:#282133; --text:#F3EEFA; --muted:#A9A1B7; --line:#2F283B; --track:#342C40;
@@ -42,7 +42,7 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#6E78C8; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#378A87; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
   color-scheme:dark}
 
 /* ===== 基本 ===== */
@@ -96,7 +96,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .hintrow{display:flex;justify-content:center;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);padding:0 18px 4px}
 .hintrow .linkbtn{font-size:12.5px}
 .ringwrap{padding:2px 12px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-items:center;justify-items:center}
-.ringwrap .center{grid-column:2;grid-row:2 / span 2;position:relative;width:136px;height:136px}
+.ringwrap .center{grid-column:2;grid-row:2;position:relative;width:136px;height:136px}
 .ring{width:136px;height:136px;transform:rotate(-90deg)}
 .ring circle{transition:stroke-dasharray .55s var(--ease),stroke-dashoffset .55s var(--ease),opacity .25s}
 .ring.dim circle[data-c]{opacity:.28}
@@ -187,6 +187,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .acts .btn{flex:1}
 .field{display:grid;gap:4px;font-size:13px;color:var(--muted)}
 .field input,.field select{min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:16px;color:var(--text);width:100%}
+.field input::placeholder{color:var(--muted)}
 .field2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .seg{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:var(--surface-2)}
 .seg button{border:0;background:none;padding:0 16px;min-height:38px;border-radius:999px;font-size:14px;color:var(--muted)}
@@ -245,7 +246,7 @@ const ICON = {
   fun:'<rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 10.5v4M6 12.5h4M15.5 12h.01M17.5 14h.01"/>',
   life:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.8 10.6c.6.6.8 1.4.8 2.4h6c0-1 .2-1.8.8-2.4A6 6 0 0 0 12 3z"/>',
   home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
-  sport:'<path d="M6.5 7v10M3.5 9.5v5M17.5 7v10M20.5 9.5v5M6.5 12h11"/>',
+  sport:'<rect x="4.5" y="7" width="3.5" height="10" rx="1.2"/><rect x="16" y="7" width="3.5" height="10" rx="1.2"/><path d="M8 12h8M2.5 10v4M21.5 10v4"/>',
   med:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/>',
   other:'<path d="M6 12h.01M12 12h.01M18 12h.01"/>',
   salary:'<rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/>',
@@ -260,13 +261,26 @@ const ICON = {
 const ico = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICON[k] || ICON.other}</svg>`;
 
 /* ===== 分類（支出 9 個＋收入 2 個）=====
-   居住幾乎都是固定收支（房租、水電），不放首頁圓環旁（noRing）；
-   臨時記一筆居住，從「生活」記帳面板上方切換。 */
+   居住幾乎都是固定收支（房租、水電），首頁不另外放按鈕：
+   圓環和按鈕上，居住的錢併進「生活・居住」；明細、報告裡還是分開。
+   臨時記一筆居住，從「生活・居住」記帳面板上方切換。 */
 const CATS = [
   {id:'food',n:'餐飲'},{id:'transit',n:'交通'},{id:'shop',n:'購物'},{id:'fun',n:'娛樂'},
-  {id:'life',n:'生活'},{id:'home',n:'居住',noRing:true},{id:'sport',n:'運動'},{id:'med',n:'醫療'},{id:'other',n:'其他'}
+  {id:'life',n:'生活'},{id:'home',n:'居住'},{id:'sport',n:'運動'},{id:'med',n:'醫療'},{id:'other',n:'其他'}
 ];
-const RING_CATS = CATS.filter(c => !c.noRing);
+/* 圓環旁 8 個按鈕，從 12 點鐘順時針排；圓環色段照同一個順序畫，按鈕和色段才對得上。
+   右半邊是想花才花的（購物、娛樂、運動），左半邊是必要的（醫療、生活、交通）。 */
+const RING = [
+  {id:'food',  col:2, row:1},
+  {id:'shop',  col:3, row:1},
+  {id:'fun',   col:3, row:2},
+  {id:'sport', col:3, row:3},
+  {id:'other', col:2, row:3},
+  {id:'med',   col:1, row:3},
+  {id:'life',  col:1, row:2, n:'生活・居住'},
+  {id:'transit', col:1, row:1}
+];
+const ringId = id => id === 'home' ? 'life' : id;
 const LIFE_PAIR = ['life', 'home'];
 const INCATS = [{id:'salary',n:'薪水'},{id:'other-in',n:'其他收入'}];
 const COL = id => `var(--c-${id === 'other-in' ? 'other' : id})`;
@@ -432,9 +446,9 @@ function slotHTML(k){
 }
 function ringData(){
   const n = new Date(), mk = monthKey(n.getFullYear(), n.getMonth()), tot = {};
-  D.entries.filter(e => e.type === 'out' && !e.fixedId && e.date.startsWith(mk)).forEach(e => tot[e.c] = (tot[e.c] || 0) + e.a);
+  D.entries.filter(e => e.type === 'out' && !e.fixedId && e.date.startsWith(mk)).forEach(e => { const k = ringId(e.c); tot[k] = (tot[k] || 0) + e.a; });
   const total = Object.values(tot).reduce((a, b) => a + b, 0), r = 52, C = 2 * Math.PI * r; let off = 0;
-  const segs = total ? CATS.filter(c => tot[c.id]).map(c => { const len = tot[c.id] / total * C;
+  const segs = total ? RING.filter(c => tot[c.id]).map(c => { const len = tot[c.id] / total * C;
     const s = `<circle data-c="${c.id}" cx="68" cy="68" r="${r}" fill="none" stroke-width="15" style="stroke:${COL(c.id)};stroke-dasharray:${Math.max(len - 1.5, 0).toFixed(2)} ${C.toFixed(2)};stroke-dashoffset:${(-off).toFixed(2)}"/>`; off += len; return s; }).join('') : '';
   return {tot, total, svg:`<svg class="ring" viewBox="0 0 136 136" aria-hidden="true"><circle cx="68" cy="68" r="${r}" fill="none" stroke="var(--track)" stroke-width="15"/>${segs}</svg>`};
 }
@@ -454,8 +468,8 @@ function todayHTML(){
     </div>`;
   }
   const R = ringData(), t = todayStr();
-  const pos = [[1,1],[2,1],[3,1],[1,2],[3,2],[1,3],[3,3],[2,4]];
-  const cats = RING_CATS.map((c, i) => `<button type="button" class="rcat" data-pick="${c.id}" style="grid-column:${pos[i][0]};grid-row:${pos[i][1]}" aria-label="記一筆${c.n}"><span class="dot" style="background:${COL(c.id)}">${ico(c.id)}</span>${c.n}<span class="amtsm">${fmt(R.tot[c.id] || 0)}</span></button>`).join('');
+  const cats = RING.map(p => { const n = p.n || catOf(p.id).n, a = fmt(R.tot[p.id] || 0);
+    return `<button type="button" class="rcat" data-pick="${p.id}" style="grid-column:${p.col};grid-row:${p.row}" aria-label="記一筆${n}，這個月 ${a} 元"><span class="dot" style="background:${COL(p.id)}">${ico(p.id)}</span>${n}<span class="amtsm">${a}</span></button>`; }).join('');
   const todays = D.entries.filter(e => e.date === t).sort((a, b) => b.time.localeCompare(a.time) || b.createdAt - a.createdAt);
   const todayOut = sum(todays.filter(e => e.type === 'out' && !e.fixedId));
   return `
@@ -502,7 +516,8 @@ function pressKey(x){
 }
 function dimRing(id){
   const ring = document.querySelector('#v-today .ring'); if (!ring) return;
-  ring.classList.toggle('dim', !!id); ring.querySelectorAll('circle[data-c]').forEach(c => c.classList.toggle('sel', c.dataset.c === id));
+  const k = id && ringId(id);
+  ring.classList.toggle('dim', !!k); ring.querySelectorAll('circle[data-c]').forEach(c => c.classList.toggle('sel', c.dataset.c === k));
 }
 function saveEntry(){
   const E = S.entry; if (!E || !(+E.amount > 0)) return;
@@ -713,7 +728,7 @@ app.addEventListener('click', ev => {
   if (d.tab) { S.tab = d.tab; closeFull(); return render({resetScroll:true}); }
   if (d.key) return pressKey(d.key);
   if (d.pick) return openEntry('out', d.pick);
-  if (d.incat) { S.entry.cat = d.incat; return renderEntry(); }
+  if (d.incat) { S.entry.cat = d.incat; renderEntry(); if (S.entry.type === 'out') dimRing(S.entry.cat); return; }
   if (d.item) { S.entry.item = S.entry.item === d.item ? null : d.item; return renderEntry(); }
   if (d.listf) { S.listF = d.listf; return render(); }
   if (d.entry) return editSheet(d.entry);
