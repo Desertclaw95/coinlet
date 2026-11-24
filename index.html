@@ -175,6 +175,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .sheet-head h3{margin:0;font-size:17px}
 .full{position:absolute;inset:0;background:var(--bg);z-index:22;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .32s var(--ease)}
 .full.on{transform:none}
+.full.noanim{transition:none}
 .full .view{padding-top:0}
 .backbar{display:flex;align-items:center;gap:8px;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 6px}
 .backbar h2{margin:0;font-size:18px}
@@ -406,10 +407,17 @@ function closeSheet(){
   S.entry = null; sheet.classList.remove('on'); scrim.classList.remove('on'); sheet.setAttribute('aria-hidden', 'true');
   const r = returnFocus; returnFocus = null; if (r && document.contains(r)) setTimeout(() => r.focus({preventScroll:true}), 0);
 }
-function openFull(title, body, closable = true){
+function openFull(title, body, closable = true, animate = true){
   full.innerHTML = `<div class="backbar">${closable ? `<button type="button" class="iconbtn" data-act="close-full" aria-label="返回">${ico('back')}</button>` : ''}<h2>${title}</h2></div><div class="view">${body}</div>`;
+  full.classList.toggle('noanim', !animate);
   full.classList.add('on'); full.setAttribute('aria-hidden', 'false');
+  if (!animate) requestAnimationFrame(() => requestAnimationFrame(() => full.classList.remove('noanim')));
 }
+/* 滑入動畫時手機可能用低解析度畫文字，結束後強制重畫，避免標題一直模糊 */
+full.addEventListener('transitionend', e => {
+  if (e.target !== full || !full.classList.contains('on')) return;
+  full.style.display = 'none'; void full.offsetHeight; full.style.display = '';
+});
 function closeFull(){ full.classList.remove('on'); full.setAttribute('aria-hidden', 'true'); }
 let toastTimer, toastAct = null;
 function toast(msg, act){
@@ -679,7 +687,7 @@ function obCapture(){
   if ($('ob-budget')) o.budget = Math.round(+$('ob-budget').value) || 0;
 }
 function onboard(){
-  const o = S.ob, fm = monthlyFixedOut(), sug = Math.max(o.salary - fm - o.savings, 0);
+  const o = S.ob, fm = monthlyFixedOut(), sug = Math.max(o.salary - o.savings, 0);
   let body;
   if (o.step === 1) body = `<p class="big-q">先告訴我每個月的薪水</p>
     <div class="field2"><label class="field">薪水（每月）<input id="ob-sal" type="number" inputmode="numeric" min="0" value="${o.salary || ''}" placeholder="例如 42000"></label><label class="field">每月幾號入帳<input id="ob-day" type="number" inputmode="numeric" min="1" max="31" value="${o.payday}"></label></div>
@@ -692,11 +700,11 @@ function onboard(){
   else body = `<p class="big-q">每個月的預算</p>
     <label class="field">每個月想存下來的錢<input id="ob-save" type="number" inputmode="numeric" min="0" value="${o.savings}"></label>
     <label class="field">月預算（可以直接改）<input id="ob-budget" type="number" inputmode="numeric" min="1" value="${o.budget || sug}"></label>
-    <p class="note-p">建議預算 = 薪水 − 每月固定支出 − 想存的錢 = NT$ ${fmt(sug)}。今天才開始用也沒關係，這個月只算剩下的天數。</p>`;
+    <p class="note-p">建議預算 = 薪水 − 想存的錢 = NT$ ${fmt(sug)}。月預算包含固定支出，扣掉 NT$ ${fmt(fm)} 後每個月可以花 NT$ <span id="ob-spend">${fmt(Math.max((o.budget || sug) - fm, 0))}</span>。今天才開始用也沒關係，這個月只算剩下的天數。</p>`;
   const back = o.step > 1 ? '<button type="button" class="btn ghost" data-act="ob-back">上一步</button>' : '';
   const next = o.step < 3 ? '<button type="button" class="btn" data-act="ob-next">下一步</button>' : '<button type="button" class="btn" data-act="ob-finish">開始使用</button>';
   openFull('歡迎使用小銅板', `<div class="doc"><div class="steps">${[1,2,3].map(i => `<i class="${i <= o.step ? 'on' : ''}"></i>`).join('')}</div><div class="stepbody">${body}</div>
-    <div class="acts">${back}${next}</div>${o.step === 1 ? '<button type="button" class="linkbtn" data-act="ob-skip">先跳過，之後再設定</button>' : ''}</div>`, false);
+    <div class="acts">${back}${next}</div>${o.step === 1 ? '<button type="button" class="linkbtn" data-act="ob-skip">先跳過，之後再設定</button>' : ''}</div>`, false, false);
 }
 function finishSetup(budget){
   D.setupDone = true; D.startDate = todayStr();
@@ -819,6 +827,7 @@ function onInput(e){
     if (m && m[1].trim()) { E.amount = m[2].replace(/^0+/, ''); const w = m[1].trim(); const it = D.items.find(i => w.includes(i.n) && i.c === E.cat); if (it) E.item = it.n; }
     renderEntry(true);
   }
+  if (e.target.id === 'ob-budget' && $('ob-spend')) $('ob-spend').textContent = fmt(Math.max((Math.round(+e.target.value) || 0) - monthlyFixedOut(), 0));
   if (e.target.id === 'listq') { S.listQ = e.target.value; render({focus:'listq'}); }
 }
 app.addEventListener('input', onInput);
