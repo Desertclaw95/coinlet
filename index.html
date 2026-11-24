@@ -25,7 +25,10 @@
   --sheet-shadow:0 -8px 30px rgba(40,10,80,.16);
   --font:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
-  --c-food:#2563EB; --c-transit:#0E7490; --c-shop:#BE185D; --c-fun:#A21CAF; --c-life:#8B5E3C; --c-home:#475569; --c-sport:#2C7A78; --c-med:#65701F; --c-other:#78716C; --c-salary:#334155; --on-cat:#FFFFFF;
+  /* 分類色：12 種讓使用者挑（色相避開紫色和綠／琥珀／紅）；salary 只給收入用，rest 是圓環上「沒放首頁的分類」 */
+  --c-blue:#2563EB; --c-cyan:#0E7490; --c-teal:#2C7A78; --c-denim:#3F6E8C; --c-navy:#1E3A8A; --c-slate:#475569;
+  --c-pink:#BE185D; --c-magenta:#A21CAF; --c-brown:#8B5E3C; --c-cocoa:#6B4F3A; --c-olive:#65701F; --c-stone:#78716C;
+  --c-salary:#334155; --c-rest:#C9C0D4; --on-cat:#FFFFFF;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -34,7 +37,9 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#378A87; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-blue:#3B72D9; --c-cyan:#1A86A3; --c-teal:#378A87; --c-denim:#5A8BAA; --c-navy:#4A69C4; --c-slate:#66758C;
+  --c-pink:#C43F78; --c-magenta:#A646B8; --c-brown:#A06C42; --c-cocoa:#8E6E55; --c-olive:#7F8A33; --c-stone:#857E78;
+  --c-salary:#66758C; --c-rest:#4A4157; --on-cat:#14101B;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --page:#0E0B13; --bg:#14101B; --surface:#1E1828; --surface-2:#282133; --text:#F3EEFA; --muted:#A9A1B7; --line:#2F283B; --track:#342C40;
@@ -42,7 +47,9 @@
   --ok:#34D399; --ok-soft:#0F3A2E; --warn:#FBBF24; --warn-soft:#3B2A0A; --bad:#F87171; --bad-soft:#3F1A1A;
   --amber:#FBBF24; --amber-soft:#3B2A0A; --amber-ink:#EBCB8B;
   --toast-bg:#F3EEFA; --toast-fg:#15111C; --toast-link:#6D28D9; --scrim:rgba(0,0,0,.55); --sheet-shadow:0 -8px 30px rgba(0,0,0,.45);
-  --c-food:#3B72D9; --c-transit:#1A86A3; --c-shop:#C43F78; --c-fun:#A646B8; --c-life:#A06C42; --c-home:#66758C; --c-sport:#378A87; --c-med:#7F8A33; --c-other:#857E78; --c-salary:#66758C; --on-cat:#14101B;
+  --c-blue:#3B72D9; --c-cyan:#1A86A3; --c-teal:#378A87; --c-denim:#5A8BAA; --c-navy:#4A69C4; --c-slate:#66758C;
+  --c-pink:#C43F78; --c-magenta:#A646B8; --c-brown:#A06C42; --c-cocoa:#8E6E55; --c-olive:#7F8A33; --c-stone:#857E78;
+  --c-salary:#66758C; --c-rest:#4A4157; --on-cat:#14101B;
   color-scheme:dark}
 
 /* ===== 基本 ===== */
@@ -89,10 +96,17 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 
 .slot{margin:0 14px 12px;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--surface);text-align:left;width:calc(100% - 28px);color:var(--text)}
 .slot .badge{width:36px;height:36px;border-radius:12px;display:grid;place-content:center;flex:none;background:var(--surface-2)}
+.slot .badge .dot{width:36px;height:36px;border-radius:12px;display:grid;place-content:center;color:var(--on-cat)}
+.slot .badge .dot .ico{width:18px;height:18px}
 .slot .t{flex:1;min-width:0;display:grid;gap:1px}
 .slot .t b{font-size:14px;font-weight:600}
 .slot .t span{font-size:12.5px;color:var(--muted)}
 
+.slot .acts2{display:flex;gap:6px;margin-top:8px}
+.slot .acts2 .btn{min-height:38px;padding:0 14px;font-size:14px}
+.slot.tall{align-items:flex-start}
+.ringwrap .center{cursor:pointer;border-radius:50%}
+.ringwrap .center:active .ring{transform:rotate(-90deg) scale(.97)}
 .hintrow{display:flex;justify-content:center;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);padding:0 18px 4px}
 .hintrow .linkbtn{font-size:12.5px}
 .ringwrap{padding:2px 12px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-items:center;justify-items:center}
@@ -111,6 +125,99 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .rcat .amtsm{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 .todaybox{margin:0 18px 18px;display:grid;border-top:1px solid var(--line)}
 .today-toggle{display:flex;justify-content:space-between;align-items:center;border:0;background:none;padding:2px 0;font-size:13px;color:var(--muted);min-height:44px}
+
+.rcat.empty{color:var(--muted)}
+.rcat.empty .dot{background:none;border:1.5px dashed var(--muted);color:var(--muted)}
+.textbtn{border:0;background:none;color:var(--primary-ink);font-weight:600;font-size:15px;min-height:44px;padding:0 8px}
+
+/* ===== 分類：全部分類、編輯首頁、新增／修改 ===== */
+.count{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.count.maxed{color:var(--primary-ink)}
+.sheet-head h3 .count{margin-left:6px}
+.secttl{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:-6px}
+.secttl .linkbtn{font-size:12.5px;min-height:36px;padding:0}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 2px}
+.tile{display:grid;justify-items:center;align-content:start;gap:3px;border:0;background:none;padding:6px 0 4px;border-radius:14px;font-size:12.5px;color:var(--text);min-height:76px;position:relative}
+.tile:active{background:var(--surface-2)}
+.tile .dot{width:40px;height:40px;border-radius:50%;display:grid;place-content:center;color:var(--on-cat)}
+.tile .dot .ico{width:19px;height:19px}
+.tile .amtsm{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tile.add{color:var(--muted)}
+.tile.add .dot{background:none;border:1.5px dashed var(--muted);color:var(--muted)}
+.tile:disabled{opacity:.45;cursor:default}
+.tile .pen{position:absolute;top:2px;right:10px;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-content:center;color:var(--text)}
+.tile .pen .ico{width:11px;height:11px;stroke-width:2.4}
+.tile[aria-pressed="true"]{font-weight:600}
+.tile[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--primary)}
+.full .tile[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--primary)}
+.center-note{margin:0;font-size:12.5px;color:var(--muted);text-align:center}
+.eboard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:10px 4px}
+.eboard .ringwrap{padding:0}
+.ecenter{grid-column:2;grid-row:2;display:grid;place-content:center;text-align:center;width:120px;height:120px;border-radius:50%;border:12px solid var(--track)}
+.ecenter b{font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.ecenter span{font-size:11px;color:var(--muted)}
+.eslot{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.eslot.filled{cursor:grab}
+.eslot .x{position:absolute;top:0;right:10px;width:24px;height:24px;border-radius:50%;border:0;background:var(--text);color:var(--bg);display:grid;place-content:center;padding:0}
+.eslot .x .ico{width:12px;height:12px;stroke-width:2.6}
+.eslot.sel{color:var(--primary-ink);font-weight:600}
+.eslot.empty.sel .dot{border-style:solid;border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+.eslot.filled.sel .dot{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--primary)}
+.eslot.over .dot{box-shadow:0 0 0 3px var(--primary)}
+.eslot.dragging{opacity:.35}
+.dragghost{position:absolute;z-index:40;pointer-events:none;width:88px;display:grid;justify-items:center;gap:2px;font-size:12.5px;color:var(--text);transform:translate(-50%,-50%) scale(1.08);filter:drop-shadow(0 8px 14px rgba(40,10,80,.25))}
+.dragghost .dot{width:42px;height:42px;border-radius:50%;display:grid;place-content:center;color:var(--on-cat)}
+.pool{display:flex;flex-wrap:wrap;gap:6px}
+.pchip{display:flex;align-items:center;gap:6px;min-height:40px;padding:0 13px 0 5px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;color:var(--text)}
+.pchip .dot{width:28px;height:28px;border-radius:50%;display:grid;place-content:center;color:var(--on-cat)}
+.pchip .dot .ico{width:15px;height:15px}
+.pchip > .ico{width:14px;height:14px;color:var(--muted)}
+.pchip:disabled{opacity:.45;cursor:default}
+.seg.wide{display:flex}
+.seg.wide button{flex:1}
+.cpreview{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.cpreview .dot{width:48px;height:48px;border-radius:50%;display:grid;place-content:center;color:var(--on-cat)}
+.cpreview .dot .ico{width:22px;height:22px}
+.cpreview b{font-size:17px}
+.cpreview span span{display:block;font-size:12.5px;color:var(--muted)}
+.flabel{font-size:13px;color:var(--muted);font-weight:600;margin-top:6px}
+.tinput{min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:16px;color:var(--text);width:100%}
+.tinput::placeholder{color:var(--muted)}
+.swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.swc{aspect-ratio:1;border-radius:50%;border:0;display:grid;place-content:center;color:var(--on-cat)}
+.swc .ico{width:16px;height:16px;stroke-width:2.6;opacity:0}
+.swc[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--text)}
+.swc[aria-pressed="true"] .ico{opacity:1}
+.swc{position:relative}
+.swc .used{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--bg)}
+.swc .used::after{content:"";position:absolute;inset:2px;border-radius:50%;background:var(--muted)}
+.swnote{margin:-2px 0 0;font-size:12.5px;color:var(--muted)}
+.picked{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:var(--surface-2)}
+.picked .dot{width:32px;height:32px;border-radius:50%;display:grid;place-content:center;color:var(--on-cat)}
+.picked .dot .ico{width:16px;height:16px}
+.picked b{flex:1;font-size:15px}
+.cfdanger{display:grid;gap:4px;padding-top:18px;margin-top:8px;border-top:1px solid var(--line)}
+.selbar{display:flex;align-items:center;gap:8px;padding:8px 10px 8px 12px;border-radius:14px;background:var(--primary-soft);color:var(--primary-ink);font-size:13.5px}
+.selbar span{flex:1}
+.selbar .btn{min-height:38px;padding:0 14px;font-size:14px}
+.icons{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ib{aspect-ratio:1;border-radius:12px;border:0;background:var(--surface-2);display:grid;place-content:center;color:var(--text)}
+.ib[aria-pressed="true"]{background:var(--primary-soft);color:var(--primary-ink);box-shadow:inset 0 0 0 2px var(--primary)}
+.kopt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;color:var(--text);width:100%}
+.kopt[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft)}
+.kopt .rd{width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);flex:none;margin-top:2px}
+.kopt[aria-pressed="true"] .rd{border:5px solid var(--primary)}
+.kopt b{font-size:14.5px;display:block;font-weight:600}
+.kopt span span{font-size:12.5px;color:var(--muted)}
+.tgrow{display:flex;justify-content:space-between;align-items:center;gap:10px;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:none;padding:6px 0;text-align:left;width:100%;color:var(--text);font-size:15px;min-height:56px}
+.tgrow span span{display:block;font-size:12.5px;color:var(--muted)}
+.tg{width:46px;height:28px;border-radius:999px;background:var(--track);position:relative;flex:none;transition:background .2s}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .2s var(--ease)}
+.tgrow[aria-pressed="true"] .tg{background:var(--primary)}
+.tgrow[aria-pressed="true"] .tg::after{transform:translateX(18px)}
+.tgrow:disabled{opacity:.5;cursor:default}
+.stickybar{position:sticky;bottom:0;background:linear-gradient(to top,var(--bg) 70%,transparent);padding:14px 0 6px;display:grid;gap:4px}
+.btn.quiet{background:none;color:var(--muted);font-weight:500;text-decoration:underline;text-underline-offset:3px}
 
 /* ===== 記帳面板 ===== */
 .entry-sheet{display:grid;gap:10px}
@@ -178,7 +285,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .full.noanim{transition:none}
 .full .view{padding-top:0}
 .backbar{display:flex;align-items:center;gap:8px;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 6px}
-.backbar h2{margin:0;font-size:18px}
+.backbar h2{margin:0;font-size:18px;flex:1}
 
 .btn{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:15px}
 .btn.ghost{background:var(--surface-2);color:var(--text);font-weight:500}
@@ -228,6 +335,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
   <div class="scrim" id="scrim"></div>
   <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true"></div>
   <div class="full" id="full" role="dialog" aria-modal="true" aria-hidden="true"></div>
+  <div class="full" id="full2" role="dialog" aria-modal="true" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-msg"></span><button type="button" id="toast-act">復原</button></div>
 </div>
 
@@ -250,6 +358,23 @@ const ICON = {
   sport:'<rect x="4.5" y="7" width="3.5" height="10" rx="1.2"/><rect x="16" y="7" width="3.5" height="10" rx="1.2"/><path d="M8 12h8M2.5 10v4M21.5 10v4"/>',
   med:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/>',
   other:'<path d="M6 12h.01M12 12h.01M18 12h.01"/>',
+  drink:'<path d="M7 8h10l-1.2 12H8.2z"/><path d="M6 8h12M13 8l1.5-5H18"/>',
+  snack:'<circle cx="12" cy="12" r="8"/><path d="M9 9h.01M14 8.5h.01M15.5 13.5h.01M10 14.5h.01"/>',
+  car:'<path d="M5 16v-5l2-5h10l2 5v5M4 11h16M5 16h14M6 16v3M18 16v3"/><path d="M8 13.5h.01M16 13.5h.01"/>',
+  clothes:'<path d="M8 4L3 7l2 4 2-1v10h10V10l2 1 2-4-5-3c-.5 1.5-2 2.5-4 2.5S8.5 5.5 8 4z"/>',
+  social:'<path d="M5.5 3h5l-.5 6a2 2 0 0 1-4 0zM13.5 3h5l-.5 6a2 2 0 0 1-4 0z"/><path d="M8 11v8M16 11v8M5.5 19h5M13.5 19h5"/>',
+  bill:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+  insure:'<path d="M12 3l7 3v5.5c0 4.5-3 8-7 9.5-4-1.5-7-5-7-9.5V6z"/><path d="M9 12l2 2 4-4"/>',
+  pet:'<circle cx="6.5" cy="10" r="1.7"/><circle cx="10" cy="6" r="1.7"/><circle cx="14" cy="6" r="1.7"/><circle cx="17.5" cy="10" r="1.7"/><path d="M8.3 17.6c0-2.6 1.9-5.1 3.7-5.1s3.7 2.5 3.7 5.1c0 1.7-1.6 2.4-3.7 2.4s-3.7-.7-3.7-2.4z"/>',
+  kid:'<circle cx="12" cy="13" r="7.5"/><path d="M9.5 15.5c1.4 1.2 3.6 1.2 5 0M9.2 12h.01M14.8 12h.01M12 5.5c-.8-1.6.4-2.8 1.8-2.3"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  study:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>',
+  travel:'<path d="M21 4L3 11l6 2.5L11.5 20z"/><path d="M9 13.5L21 4"/>',
+  beauty:'<path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"/><path d="M18.5 15v5M16 17.5h5"/>',
+  gift:'<rect x="4" y="9" width="16" height="11" rx="2"/><path d="M3 9h18M12 9v11M12 9c-1.5-3.5-5-4-5-1.5S10 9 12 9zm0 0c1.5-3.5 5-4 5-1.5S14 9 12 9z"/>',
+  tech:'<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>',
+  sub:'<path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.7L4 15.5M4 20v-4.5h4.5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>', pen:'<path d="M4 20l4-1 11-11-3-3L5 16z"/>', check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   salary:'<rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/>',
   gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   calendar:'<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/>',
@@ -261,32 +386,46 @@ const ICON = {
 };
 const ico = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICON[k] || ICON.other}</svg>`;
 
-/* ===== 分類（支出 9 個＋收入 2 個）=====
-   居住幾乎都是固定收支（房租、水電），首頁不另外放按鈕：
-   圓環和按鈕上，居住的錢併進「生活・居住」；明細、報告裡還是分開。
-   臨時記一筆居住，從「生活・居住」記帳面板上方切換。 */
-const CATS = [
-  {id:'food',n:'餐飲'},{id:'transit',n:'交通'},{id:'shop',n:'購物'},{id:'fun',n:'娛樂'},
-  {id:'life',n:'生活'},{id:'home',n:'居住'},{id:'sport',n:'運動'},{id:'med',n:'醫療'},{id:'other',n:'其他'}
+/* ===== 分類 =====
+   支出分類存在使用者資料（D.cats），可以新增、改名、換圖案和顏色、收起來。
+   收起來（off）的分類不會刪掉，舊的帳才找得到名字；記帳和選單裡看不到。
+   首頁圓環旁 8 格放哪些分類也存在 D.home（8 格，空的是 null），從 12 點鐘順時針。
+   w = 想花才花（晚上回顧會抽問值不值得）；false = 必要的，不抽。 */
+const MAX_CATS = 24, MAX_HOME = 8;
+const COLORS = [['blue','藍'],['cyan','青'],['teal','藍綠'],['denim','灰藍'],['navy','深藍'],['slate','石板灰'],['pink','桃紅'],['magenta','洋紅'],['brown','棕'],['cocoa','可可'],['olive','橄欖'],['stone','暖灰']];
+const ICON_NAME = {food:'餐具',drink:'飲料杯',snack:'餅乾',transit:'公車',car:'汽車',shop:'購物袋',clothes:'衣服',fun:'遊戲機',social:'乾杯',life:'燈泡',home:'房子',bill:'帳單',sport:'啞鈴',med:'醫藥',insure:'盾牌',pet:'腳印',kid:'小孩',heart:'愛心',study:'書',travel:'紙飛機',beauty:'閃亮',gift:'禮物',tech:'手機',sub:'循環',other:'三個點'};
+const ICON_PICK = ['food','drink','snack','transit','car','shop','clothes','fun','social','life','home','bill','sport','med','insure','pet','kid','heart','study','travel','beauty','gift','tech','sub','other'];
+const PRESETS = [
+  {id:'food',n:'餐飲',i:'food',c:'blue',w:true},{id:'transit',n:'交通',i:'transit',c:'cyan',w:false},
+  {id:'shop',n:'購物',i:'shop',c:'pink',w:true},{id:'fun',n:'娛樂',i:'fun',c:'magenta',w:true},
+  {id:'life',n:'生活',i:'life',c:'brown',w:true},{id:'home',n:'居住',i:'home',c:'slate',w:false},
+  {id:'sport',n:'運動',i:'sport',c:'teal',w:true},{id:'med',n:'醫療',i:'med',c:'olive',w:false},
+  {id:'other',n:'其他',i:'other',c:'stone',w:true},{id:'drink',n:'飲料',i:'drink',c:'cocoa',w:true},
+  {id:'snack',n:'零食',i:'snack',c:'brown',w:true},{id:'car',n:'汽機車',i:'car',c:'slate',w:false},
+  {id:'clothes',n:'服飾',i:'clothes',c:'pink',w:true},{id:'social',n:'聚會',i:'social',c:'magenta',w:true},
+  {id:'bill',n:'帳單',i:'bill',c:'denim',w:false},{id:'insure',n:'保險',i:'insure',c:'navy',w:false},
+  {id:'pet',n:'寵物',i:'pet',c:'cocoa',w:false},{id:'kid',n:'小孩',i:'kid',c:'teal',w:false},
+  {id:'heart',n:'家人',i:'heart',c:'pink',w:false},{id:'study',n:'學習',i:'study',c:'navy',w:false},
+  {id:'travel',n:'旅遊',i:'travel',c:'cyan',w:true},{id:'beauty',n:'美容',i:'beauty',c:'magenta',w:true},
+  {id:'gift',n:'禮物',i:'gift',c:'olive',w:true},{id:'tech',n:'3C',i:'tech',c:'denim',w:true},
+  {id:'sub',n:'訂閱',i:'sub',c:'stone',w:true}
 ];
-/* 圓環旁 8 個按鈕，從 12 點鐘順時針排；圓環色段照同一個順序畫，按鈕和色段才對得上。
-   右半邊是想花才花的（購物、娛樂、運動），左半邊是必要的（醫療、生活、交通）。 */
-const RING = [
-  {id:'food',  col:2, row:1},
-  {id:'shop',  col:3, row:1},
-  {id:'fun',   col:3, row:2},
-  {id:'sport', col:3, row:3},
-  {id:'other', col:2, row:3},
-  {id:'med',   col:1, row:3},
-  {id:'life',  col:1, row:2, n:'生活・居住'},
-  {id:'transit', col:1, row:1}
-];
-const ringId = id => id === 'home' ? 'life' : id;
-const LIFE_PAIR = ['life', 'home'];
-const INCATS = [{id:'salary',n:'薪水'},{id:'other-in',n:'其他收入'}];
-const COL = id => `var(--c-${id === 'other-in' ? 'other' : id})`;
-const catOf = id => CATS.find(c => c.id === id) || INCATS.find(c => c.id === id) || CATS.find(c => c.id === 'other');
-const icoKey = id => id === 'other-in' ? 'other' : id;
+const DEFAULT_CAT_IDS = ['food','transit','shop','fun','life','home','sport','med','other'];
+const defaultCats = () => DEFAULT_CAT_IDS.map(id => ({...PRESETS.find(p => p.id === id)}));
+const DEFAULT_HOME = ['food','shop','fun','sport','other','med','life','transit'];
+/* 圓環旁 8 格的位置：從 12 點鐘順時針 */
+const POS = [[2,1],[3,1],[3,2],[3,3],[2,3],[1,3],[1,2],[1,1]];
+const INCATS = [{id:'salary',n:'薪水',i:'salary',c:'salary'},{id:'other-in',n:'其他收入',i:'other',c:'stone'}];
+const FALLBACK = {id:'other',n:'其他',i:'other',c:'stone',w:true};
+const catOf = id => D.cats.find(c => c.id === id) || INCATS.find(c => c.id === id) || FALLBACK;
+const activeCats = () => D.cats.filter(c => !c.off);
+const offHome = () => activeCats().filter(c => !D.home.includes(c.id));
+const homeCount = () => D.home.filter(Boolean).length;
+const COL = id => `var(--c-${catOf(id).c})`;
+const catIco = id => catOf(id).i;
+const usedColors = exceptId => new Set(activeCats().filter(c => c.id !== exceptId).map(c => c.c));
+const freeColor = (want, exceptId) => { const u = usedColors(exceptId); return want && !u.has(want) ? want : (COLORS.map(x => x[0]).find(k => !u.has(k)) || want || 'blue'); };
+const dotHTML = c => `<span class="dot" style="background:var(--c-${c.c})">${ico(c.i)}</span>`;
 
 /* ===== 小工具 ===== */
 const fmt = n => Math.round(n).toLocaleString('en-US');
@@ -310,11 +449,18 @@ const DEFAULT_ITEMS = [
   {n:'咖啡',c:'food',watch:true},{n:'外送',c:'food',watch:true},{n:'7-11',c:'food',watch:true},{n:'捷運',c:'transit',watch:false},
   {n:'計程車',c:'transit',watch:false},{n:'網購',c:'shop',watch:true},{n:'電影',c:'fun',watch:false},{n:'健身房',c:'sport',watch:false},{n:'藥局',c:'med',watch:false}
 ];
-const blank = () => ({v:1, setupDone:false, startDate:null, budget:null, fixed:[], items:DEFAULT_ITEMS.map(x => ({...x})), entries:[], fixedDone:{}, theme:'system'});
+const blank = () => ({v:1, setupDone:false, startDate:null, budget:null, fixed:[], items:DEFAULT_ITEMS.map(x => ({...x})), entries:[], fixedDone:{}, theme:'system', cats:defaultCats(), home:[...DEFAULT_HOME]});
 let D;
 function load(){
   try { const raw = localStorage.getItem(KEY); D = raw ? {...blank(), ...JSON.parse(raw)} : blank(); }
   catch (err) { D = blank(); }
+  // 舊使用者第一次打開有自訂分類的版本：首頁顯示一次說明卡
+  try { const old = JSON.parse(localStorage.getItem(KEY) || 'null'); if (old && !old.cats && old.setupDone) D.catsIntro = true; } catch (err) {}
+  if (!Array.isArray(D.sugNo)) D.sugNo = [];
+  // 舊資料：缺的預設分類補回來（舊的帳都用這些代號），首頁固定 8 格
+  DEFAULT_CAT_IDS.forEach(id => { if (!D.cats.some(c => c.id === id)) D.cats.push({...PRESETS.find(p => p.id === id), off:true}); });
+  if (!Array.isArray(D.home)) D.home = [...DEFAULT_HOME];
+  D.home = Array.from({length:MAX_HOME}, (_, i) => { const id = D.home[i]; return id && D.cats.some(c => c.id === id && !c.off) ? id : null; });
 }
 let saveWarned = false;
 function save(){
@@ -407,8 +553,8 @@ function closeSheet(){
   S.entry = null; sheet.classList.remove('on'); scrim.classList.remove('on'); sheet.setAttribute('aria-hidden', 'true');
   const r = returnFocus; returnFocus = null; if (r && document.contains(r)) setTimeout(() => r.focus({preventScroll:true}), 0);
 }
-function openFull(title, body, closable = true, animate = true){
-  full.innerHTML = `<div class="backbar">${closable ? `<button type="button" class="iconbtn" data-act="close-full" aria-label="返回">${ico('back')}</button>` : ''}<h2>${title}</h2></div><div class="view">${body}</div>`;
+function openFull(title, body, closable = true, animate = true, right = ''){
+  full.innerHTML = `<div class="backbar">${closable ? `<button type="button" class="iconbtn" data-act="close-full" aria-label="返回">${ico('back')}</button>` : ''}<h2>${title}</h2>${right}</div><div class="view">${body}</div>`;
   full.classList.toggle('noanim', !animate);
   full.classList.add('on'); full.setAttribute('aria-hidden', 'false');
   if (!animate) requestAnimationFrame(() => requestAnimationFrame(() => full.classList.remove('noanim')));
@@ -418,13 +564,13 @@ full.addEventListener('transitionend', e => {
   if (e.target !== full || !full.classList.contains('on')) return;
   full.style.display = 'none'; void full.offsetHeight; full.style.display = '';
 });
-function closeFull(){ full.classList.remove('on'); full.setAttribute('aria-hidden', 'true'); }
+function closeFull(){ full.classList.remove('on'); full.setAttribute('aria-hidden', 'true'); S.homeEdit = false; }
 let toastTimer, toastAct = null;
-function toast(msg, act){
+function toast(msg, act, label = '復原', ms = 4500){
   $('toast-msg').textContent = msg;
-  $('toast-act').hidden = !act; toastAct = act || null;
+  $('toast-act').hidden = !act; toastAct = act || null; $('toast-act').textContent = label;
   $('toast').classList.add('show');
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('show'), 4500);
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('show'), ms);
 }
 const head = t => `<div class="sheet-head"><h3>${t}</h3><button type="button" class="iconbtn" data-act="close-sheet" aria-label="關閉">${ico('x')}</button></div>`;
 
@@ -433,7 +579,7 @@ function rowHTML(e, button){
   const c = catOf(e.c);
   const tag = e.fixedId ? '<span class="tag">固定</span>' : '';
   const sub = [c.n, e.note, e.time].filter(Boolean).map(esc).join(' · ');
-  const inner = `<span class="cic" style="background:${COL(e.c)}">${ico(icoKey(e.c))}</span>
+  const inner = `<span class="cic" style="background:${COL(e.c)}">${ico(catIco(e.c))}</span>
     <span class="n"><b>${esc(e.n)}${tag}</b><span>${sub}</span></span>
     <span class="a ${e.type === 'in' ? 'in' : ''}">${e.type === 'in' ? '+' : ''}NT$ ${fmt(e.a)}</span>`;
   return button ? `<button type="button" class="row" data-entry="${e.id}">${inner}</button>` : `<div class="row">${inner}</div>`;
@@ -446,7 +592,22 @@ function nextYearlyNotice(){
   const f = D.fixed.find(f => f.type === 'out' && f.freq === 'year' && f.month - 1 === nm && f.a >= 3000);
   return f ? `下個月 ${f.month}/${f.day} 要繳${esc(f.n)} NT$ ${fmt(f.a)}，那個月可以花的錢會先扣掉這筆。` : '';
 }
+// 沒放首頁的分類，最近兩週比首頁上最少用的那個還常記 → 建議換上去（一個分類只建議一次）
+function homeSuggestion(){
+  if (homeCount() < MAX_HOME) return null;
+  const since = ymd(new Date(Date.now() - 14 * 864e5)), cnt = {};
+  D.entries.forEach(e => { if (e.type === 'out' && !e.fixedId && e.date >= since) cnt[e.c] = (cnt[e.c] || 0) + 1; });
+  const out = offHome().filter(c => !D.sugNo.includes(c.id) && (cnt[c.id] || 0) >= 5).sort((a, b) => cnt[b.id] - cnt[a.id])[0];
+  if (!out) return null;
+  const slot = D.home.map((id, i) => ({id, i, n:cnt[id] || 0})).sort((a, b) => a.n - b.n)[0];
+  return cnt[out.id] > slot.n * 2 ? {out, inn:catOf(slot.id), slot:slot.i, times:cnt[out.id]} : null;
+}
 function slotHTML(k){
+  if (D.catsIntro) return `<div class="slot tall"><span class="badge">${ico('pen')}</span><span class="t"><b>分類可以自己改了</b><span>首頁 8 格放哪些分類由你決定，也能新增、改名字。「居住」現在放在「全部分類」裡，以前的帳都還在。</span>
+    <span class="acts2"><button type="button" class="btn" data-act="intro-edit">編輯首頁</button><button type="button" class="btn ghost" data-act="intro-ok">知道了</button></span></span></div>`;
+  const sg = k && homeSuggestion();
+  if (sg) return `<div class="slot tall"><span class="badge">${dotHTML(sg.out)}</span><span class="t"><b>${esc(sg.out.n)}最近很常記</b><span>這兩週記了 ${sg.times} 次，比首頁上的「${esc(sg.inn.n)}」常用。要換上首頁嗎？</span>
+    <span class="acts2"><button type="button" class="btn" data-act="sug-yes" data-sid="${sg.out.id}" data-sslot="${sg.slot}">換上去</button><button type="button" class="btn ghost" data-act="sug-no" data-sid="${sg.out.id}">不用</button></span></span></div>`;
   if (!k) return `<button type="button" class="slot" data-act="budget"><span class="badge">${ico('wallet')}</span><span class="t"><b>先設定每個月的預算</b><span>設好才算得出今天還能花多少</span></span>${ico('chev')}</button>`;
   const y = nextYearlyNotice();
   if (y) return `<div class="slot"><span class="badge">${ico('calendar')}</span><span class="t"><b>提醒</b><span>${y}</span></span></div>`;
@@ -454,11 +615,15 @@ function slotHTML(k){
 }
 function ringData(){
   const n = new Date(), mk = monthKey(n.getFullYear(), n.getMonth()), tot = {};
-  D.entries.filter(e => e.type === 'out' && !e.fixedId && e.date.startsWith(mk)).forEach(e => { const k = ringId(e.c); tot[k] = (tot[k] || 0) + e.a; });
+  D.entries.filter(e => e.type === 'out' && !e.fixedId && e.date.startsWith(mk)).forEach(e => { tot[e.c] = (tot[e.c] || 0) + e.a; });
   const total = Object.values(tot).reduce((a, b) => a + b, 0), r = 52, C = 2 * Math.PI * r; let off = 0;
-  const segs = total ? RING.filter(c => tot[c.id]).map(c => { const len = tot[c.id] / total * C;
-    const s = `<circle data-c="${c.id}" cx="68" cy="68" r="${r}" fill="none" stroke-width="15" style="stroke:${COL(c.id)};stroke-dasharray:${Math.max(len - 1.5, 0).toFixed(2)} ${C.toFixed(2)};stroke-dashoffset:${(-off).toFixed(2)}"/>`; off += len; return s; }).join('') : '';
-  return {tot, total, svg:`<svg class="ring" viewBox="0 0 136 136" aria-hidden="true"><circle cx="68" cy="68" r="${r}" fill="none" stroke="var(--track)" stroke-width="15"/>${segs}</svg>`};
+  // 首頁上的分類各畫一段（照格子順序），其餘的錢併成一段灰色
+  const parts = D.home.filter(id => id && tot[id]).map(id => ({k:id, a:tot[id], col:COL(id)}));
+  const rest = total - parts.reduce((t, p) => t + p.a, 0);
+  if (rest > 0) parts.push({k:'_rest', a:rest, col:'var(--c-rest)'});
+  const segs = total ? parts.map(p => { const len = p.a / total * C;
+    const s = `<circle data-c="${p.k}" cx="68" cy="68" r="${r}" fill="none" stroke-width="15" style="stroke:${p.col};stroke-dasharray:${Math.max(len - 1.5, 0).toFixed(2)} ${C.toFixed(2)};stroke-dashoffset:${(-off).toFixed(2)}"/>`; off += len; return s; }).join('') : '';
+  return {tot, total, rest, svg:`<svg class="ring" viewBox="0 0 136 136" aria-hidden="true"><circle cx="68" cy="68" r="${r}" fill="none" stroke="var(--track)" stroke-width="15"/>${segs}</svg>`};
 }
 function todayHTML(){
   const k = calc(), n = new Date();
@@ -476,15 +641,17 @@ function todayHTML(){
     </div>`;
   }
   const R = ringData(), t = todayStr();
-  const cats = RING.map(p => { const n = p.n || catOf(p.id).n, a = fmt(R.tot[p.id] || 0);
-    return `<button type="button" class="rcat" data-pick="${p.id}" style="grid-column:${p.col};grid-row:${p.row}" aria-label="記一筆${n}，這個月 ${a} 元"><span class="dot" style="background:${COL(p.id)}">${ico(p.id)}</span>${n}<span class="amtsm">${a}</span></button>`; }).join('');
+  const cats = D.home.map((id, i) => { const [cx, cy] = POS[i];
+    if (!id) return `<button type="button" class="rcat empty" data-slot="${i}" style="grid-column:${cx};grid-row:${cy}" aria-label="空的格子，放一個分類"><span class="dot">${ico('plus')}</span>放分類</button>`;
+    const c = catOf(id), a = fmt(R.tot[id] || 0);
+    return `<button type="button" class="rcat" data-pick="${id}" style="grid-column:${cx};grid-row:${cy}" aria-label="記一筆${esc(c.n)}，這個月 ${a} 元">${dotHTML(c)}${esc(c.n)}<span class="amtsm">${a}</span></button>`; }).join('');
   const todays = D.entries.filter(e => e.date === t).sort((a, b) => b.time.localeCompare(a.time) || b.createdAt - a.createdAt);
   const todayOut = sum(todays.filter(e => e.type === 'out' && !e.fixedId));
   return `
   <div class="topbar"><span class="date">${n.getMonth() + 1}月${n.getDate()}日 週${WD[n.getDay()]}</span><button type="button" class="iconbtn" data-act="settings" aria-label="設定">${ico('gear')}</button></div>
   ${hero}
-  <div class="hintrow">點任一個分類就能記一筆 · <button type="button" class="linkbtn" data-act="add-income">記收入</button></div>
-  <div class="ringwrap">${cats}<div class="center">${R.svg}<div class="ringtxt"><span>這個月支出</span><b>${fmt(R.total)}</b><span>不含固定</span></div></div></div>
+  <div class="hintrow">點分類記一筆 · <button type="button" class="linkbtn" data-act="all-cats">全部分類</button> · <button type="button" class="linkbtn" data-act="add-income">記收入</button></div>
+  <div class="ringwrap">${cats}<div class="center" data-act="all-cats" role="button" tabindex="0" aria-label="這個月支出 ${fmt(R.total)} 元，看全部分類">${R.svg}<div class="ringtxt"><span>這個月支出</span><b>${fmt(R.total)}</b><span>${R.rest ? '灰色＝其餘分類' : '不含固定'}</span></div></div></div>
   ${slotHTML(k)}
   <div class="todaybox">
     <button type="button" class="today-toggle" data-act="list-toggle" aria-expanded="${S.listOpen}"><span>今天 ${todays.length} 筆 · 支出 NT$ ${fmt(todayOut)}</span>${ico(S.listOpen ? 'up' : 'down')}</button>
@@ -498,9 +665,8 @@ function entrySheetHTML(){
   const items = E.type === 'out' ? sortedItems().filter(i => i.c === E.cat) : [];
   const ok = +E.amount > 0;
   return `<div class="entry-sheet">
-    <div class="sheet-head"><span class="cathead"><span class="dot" style="background:${COL(c.id)}">${ico(icoKey(c.id))}</span>${E.type === 'in' ? '收入・' : ''}${c.n}</span><button type="button" class="iconbtn" data-act="close-sheet" aria-label="關閉">${ico('x')}</button></div>
-    ${E.type === 'in' ? `<div class="chips" role="group" aria-label="收入分類">${INCATS.map(x => `<button type="button" class="chip" data-incat="${x.id}" aria-pressed="${E.cat === x.id}">${x.n}</button>`).join('')}</div>`
-      : LIFE_PAIR.includes(E.cat) ? `<div class="chips" role="group" aria-label="生活或居住">${LIFE_PAIR.map(id => `<button type="button" class="chip" data-incat="${id}" aria-pressed="${E.cat === id}">${catOf(id).n}</button>`).join('')}</div>` : ''}
+    <div class="sheet-head"><span class="cathead">${dotHTML(c)}${E.type === 'in' ? '收入・' : ''}${esc(c.n)}</span><button type="button" class="iconbtn" data-act="close-sheet" aria-label="關閉">${ico('x')}</button></div>
+    ${E.type === 'in' ? `<div class="chips" role="group" aria-label="收入分類">${INCATS.map(x => `<button type="button" class="chip" data-incat="${x.id}" aria-pressed="${E.cat === x.id}">${x.n}</button>`).join('')}</div>` : ''}
     <div class="amt"><input class="note" id="note" type="text" autocomplete="off" placeholder="備註，例如 ${E.type === 'in' ? '獎金 3000' : '午餐 120'}" value="${esc(E.note)}" aria-label="備註"><span class="val ${ok ? '' : 'zero'}" aria-live="polite">NT$ ${ok ? fmt(+E.amount) : '0'}</span></div>
     ${items.length ? `<div class="chips" role="group" aria-label="常用項目">${items.map(i => `<button type="button" class="chip item" data-item="${esc(i.n)}" aria-pressed="${E.item === i.n}">${esc(i.n)}</button>`).join('')}</div>` : ''}
     <div class="keys">${['1','2','3','4','5','6','7','8','9','00','0','del'].map(x => `<button type="button" data-key="${x}" aria-label="${x === 'del' ? '刪除一位' : x}">${x === 'del' ? ico('del') : x}</button>`).join('')}</div>
@@ -524,7 +690,7 @@ function pressKey(x){
 }
 function dimRing(id){
   const ring = document.querySelector('#v-today .ring'); if (!ring) return;
-  const k = id && ringId(id);
+  const k = id && (D.home.includes(id) ? id : '_rest');
   ring.classList.toggle('dim', !!k); ring.querySelectorAll('circle[data-c]').forEach(c => c.classList.toggle('sel', c.dataset.c === k));
 }
 function saveEntry(){
@@ -575,14 +741,185 @@ function listHTML(){
 function editSheet(id){
   const e = D.entries.find(x => x.id === id); if (!e) return;
   S.editId = id;
-  const list = e.type === 'in' ? INCATS : CATS;
+  const list = e.type === 'in' ? INCATS : activeCats().concat(catOf(e.c).off ? [catOf(e.c)] : []);
   openSheet(`${head('修改紀錄')}
     <div class="field2"><label class="field">日期<input id="ed-d" type="date" value="${e.date}" max="${todayStr()}"></label><label class="field">金額<input id="ed-a" type="number" inputmode="numeric" min="1" value="${e.a}"></label></div>
-    <label class="field">分類<select id="ed-c">${list.map(c => `<option value="${c.id}" ${c.id === e.c ? 'selected' : ''}>${c.n}</option>`).join('')}</select></label>
+    <label class="field">分類<select id="ed-c">${list.map(c => `<option value="${c.id}" ${c.id === e.c ? 'selected' : ''}>${esc(c.n)}</option>`).join('')}</select></label>
     <label class="field">項目<input id="ed-n" type="text" value="${esc(e.n)}"></label>
     <label class="field">備註<input id="ed-note" type="text" value="${esc(e.note)}"></label>
     ${e.fixedId ? '<p class="note-p">這筆是固定收支自動記的。改金額只改這一期；刪掉就是跳過這一期，不會再自動補記。</p>' : ''}
     <div class="acts"><button type="button" class="btn" data-act="edit-save">儲存</button><button type="button" class="btn danger" data-act="edit-del">刪除這筆</button></div>`);
+}
+
+/* ===== 分類：全部分類、放分類、編輯首頁、新增／修改 ===== */
+const full2 = $('full2');
+function catTile(c, attr){
+  return `<button type="button" class="tile" ${attr}="${c.id}" aria-label="${attr === 'data-catedit' ? '修改' : '記一筆'}${esc(c.n)}">${dotHTML(c)}${esc(c.n)}<span class="amtsm">${fmt(monthOut(c.id))}</span>${attr === 'data-catedit' ? `<span class="pen">${ico('pen')}</span>` : ''}</button>`;
+}
+function monthOut(id){ const n = new Date(), mk = monthKey(n.getFullYear(), n.getMonth()); return sum(D.entries.filter(e => e.c === id && e.type === 'out' && !e.fixedId && e.date.startsWith(mk))); }
+// 沒放首頁的分類，照最近 30 天記的次數排（一樣多就照新增順序）
+function offHomeByUse(){
+  const since = ymd(new Date(Date.now() - 30 * 864e5)), cnt = {};
+  D.entries.forEach(e => { if (e.type === 'out' && e.date >= since) cnt[e.c] = (cnt[e.c] || 0) + 1; });
+  return offHome().map((c, i) => ({c, i})).sort((a, b) => (cnt[b.c.id] || 0) - (cnt[a.c.id] || 0) || a.i - b.i).map(x => x.c);
+}
+function allCatsSheet(manage){
+  S.catSheet = 'all'; S.manage = !!manage;
+  const on = D.home.filter(Boolean).map(catOf), rest = offHomeByUse(), n = activeCats().length, maxed = n >= MAX_CATS, attr = S.manage ? 'data-catedit' : 'data-pick';
+  const html = `<div class="sheet-head"><h3>全部分類<span class="count ${maxed ? 'maxed' : ''}">${n}/${MAX_CATS}</span></h3>
+      <div style="display:flex;align-items:center"><button type="button" class="textbtn" data-act="cats-manage">${S.manage ? '完成' : '修改'}</button><button type="button" class="iconbtn" data-act="close-sheet" aria-label="關閉">${ico('x')}</button></div></div>
+    ${S.manage ? '<div class="selbar"><span>修改中：點分類就能改名字、圖案、顏色，或收起來。</span></div>' : ''}
+    <div class="secttl"><span>在首頁上（${on.length}）</span><button type="button" class="linkbtn" data-act="home-edit">編輯首頁</button></div>
+    <div class="grid4">${on.map(c => catTile(c, attr)).join('')}</div>
+    <div class="secttl"><span>其他（${rest.length}）· 常用的排前面</span></div>
+    <div class="grid4">${rest.map(c => catTile(c, attr)).join('')}
+      <button type="button" class="tile add" data-act="cat-new" ${maxed ? 'disabled' : ''}><span class="dot">${ico('plus')}</span>新增分類</button></div>
+    ${maxed ? '<p class="center-note">已經 24 個了。先把不用的分類收起來，才能再新增。</p>' : ''}`;
+  if (sheet.classList.contains('on')) sheet.innerHTML = `<div class="grab"></div>${html}`; else openSheet(html, false);
+}
+function pickSheet(slot){
+  S.catSheet = 'pick'; S.pendingSlot = slot;
+  const pool = offHomeByUse();
+  openSheet(`${head('放哪個分類到這一格？')}
+    <div class="grid4">${pool.map(c => `<button type="button" class="tile" data-place="${c.id}">${dotHTML(c)}${esc(c.n)}</button>`).join('')}
+      <button type="button" class="tile add" data-act="cat-new" ${activeCats().length >= MAX_CATS ? 'disabled' : ''}><span class="dot">${ico('plus')}</span>新增分類</button></div>`, false);
+}
+function homeEdit(){
+  S.homeEdit = true;
+  const n = homeCount(), maxed = n >= MAX_HOME, pool = offHome(), sel = S.homeSel, selCat = sel != null && D.home[sel] ? catOf(D.home[sel]) : null;
+  const slots = D.home.map((id, i) => { const [cx, cy] = POS[i];
+    if (!id) return `<button type="button" class="rcat empty eslot ${sel === i ? 'sel' : ''}" data-eslot="${i}" style="grid-column:${cx};grid-row:${cy}" aria-pressed="${sel === i}" aria-label="${selCat ? `把${esc(selCat.n)}移到這格` : '空的格子'}"><span class="dot">${ico('plus')}</span>${sel === i ? '放這裡' : selCat ? '移到這' : '空的'}</button>`;
+    const c = catOf(id);
+    return `<div class="rcat eslot filled ${sel === i ? 'sel' : ''}" data-eslot="${i}" data-id="${c.id}" style="grid-column:${cx};grid-row:${cy}" role="button" tabindex="0" aria-pressed="${sel === i}" aria-label="${esc(c.n)}${selCat && sel !== i ? `，跟${esc(selCat.n)}交換位置` : '，點一下選起來'}">${dotHTML(c)}${esc(c.n)}<button type="button" class="x" data-unhome="${i}" aria-label="${esc(c.n)}不要放首頁">${ico('x')}</button></div>`; }).join('');
+  const tip = selCat ? `已選「${esc(selCat.n)}」：點另一格交換位置，點空的格子就移過去。`
+    : sel != null ? '點下面一個分類，放進選起來的那格。'
+    : '點一下分類選起來，再點另一格就能交換位置（也可以直接拖過去）。點 ✕ 就不放首頁。';
+  const body = `<div class="pad" style="gap:10px">
+    <p class="note-p">${tip}</p>
+    <div class="eboard"><div class="ringwrap">${slots}<div class="ecenter"><b>${n}/${MAX_HOME}</b><span>首頁</span></div></div></div>
+    ${selCat ? `<div class="selbar"><span>要改「${esc(selCat.n)}」的名字、圖案、顏色？</span><button type="button" class="btn" data-catedit="${selCat.id}">修改</button></div>` : ''}
+    <div class="flabel">沒放首頁的分類</div>
+    <p class="note-p">${maxed ? '首頁 8 格都滿了。要放新的，先點 ✕ 空出一格；點下面的分類可以修改它。' : sel != null && !selCat ? '點一個分類，放進選起來的那格。' : '點一個分類，放到空的格子。'}</p>
+    <div class="pool">${pool.length ? pool.map(c => `<button type="button" class="pchip" ${maxed ? 'data-catedit' : 'data-pool'}="${c.id}" aria-label="${maxed ? '修改' : '放到首頁：'}${esc(c.n)}">${dotHTML(c)}${esc(c.n)}${maxed ? ico('pen') : ''}</button>`).join('') : '<p class="note-p">全部分類都已經在首頁上。</p>'}</div>
+    <div style="padding-top:6px"><button type="button" class="btn ghost" style="width:100%" data-act="cat-new" ${activeCats().length >= MAX_CATS ? 'disabled' : ''}>新增分類</button></div>
+  </div>`;
+  const wasOn = full.classList.contains('on') && S.homeEditShown;
+  openFull('編輯首頁', body, true, !wasOn, '<button type="button" class="textbtn" data-act="close-full">完成</button>');
+  S.homeEdit = true; S.homeEditShown = true;
+}
+/* 點格子：選起來 → 點另一格交換；選了空格 → 點下面的分類放進去 */
+function tapSlot(i){
+  const sel = S.homeSel;
+  if (sel == null || sel === i) { S.homeSel = sel === i ? null : i; return homeEdit(); }
+  if (!D.home[sel] && !D.home[i]) { S.homeSel = i; return homeEdit(); }
+  [D.home[sel], D.home[i]] = [D.home[i], D.home[sel]];
+  S.homeSel = null; afterCatChange();
+}
+function afterCatChange(){
+  save(); render();
+  if (S.homeEdit && full.classList.contains('on')) homeEdit();
+  else if (full.classList.contains('on') && !S.ob) settings();
+  if (sheet.classList.contains('on') && S.catSheet === 'all') allCatsSheet(S.manage);
+}
+/* 拖曳換位置（編輯首頁） */
+let drag = null;
+{
+  document.addEventListener('pointerdown', e => {
+    const el = e.target.closest('#full .eslot.filled'); if (!el || e.target.closest('.x')) return;
+    drag = {el, from:+el.dataset.eslot, x:e.clientX, y:e.clientY, moved:false, ghost:null};
+  });
+  document.addEventListener('pointermove', e => {
+    if (!drag) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return;
+    const box = $('app').getBoundingClientRect();
+    if (!drag.moved) {
+      drag.moved = true; drag.el.classList.add('dragging');
+      const g = document.createElement('div'); g.className = 'dragghost';
+      g.innerHTML = drag.el.querySelector('.dot').outerHTML + `<span>${esc(catOf(drag.el.dataset.id).n)}</span>`;
+      $('app').appendChild(g); drag.ghost = g;
+    }
+    drag.ghost.style.left = (e.clientX - box.left) + 'px'; drag.ghost.style.top = (e.clientY - box.top) + 'px';
+    document.querySelectorAll('.eslot.over').forEach(x => x.classList.remove('over'));
+    const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('.eslot');
+    if (t && t !== drag.el) t.classList.add('over');
+  });
+  const end = e => {
+    if (!drag) return;
+    const d = drag; drag = null;
+    if (d.ghost) d.ghost.remove();
+    if (!d.moved) { if (e.type === 'pointerup') tapSlot(+d.el.dataset.eslot); return; }
+    const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('.eslot');
+    if (t && e.type === 'pointerup') { const to = +t.dataset.eslot; [D.home[d.from], D.home[to]] = [D.home[to], D.home[d.from]]; }
+    S.homeSel = null; afterCatChange();
+  };
+  document.addEventListener('pointerup', end);
+  document.addEventListener('pointercancel', end);
+}
+function catForm(mode, id, opts = {}){
+  if (sheet.classList.contains('on')) closeSheet();
+  if (mode === 'edit') { const c = catOf(id); S.cf = {mode, d:{...c, onHome:D.home.includes(c.id)}}; }
+  else S.cf = {mode, d:{src:'preset', p:null, n:'', i:'other', c:freeColor(), w:true, onHome:!!opts.onHome}, slot:opts.slot ?? null};
+  renderCatForm(); full2.classList.add('on'); full2.setAttribute('aria-hidden', 'false');
+}
+function closeCatForm(){ full2.classList.remove('on'); full2.setAttribute('aria-hidden', 'true'); S.cf = null; }
+function renderCatForm(focus){
+  const {mode, d} = S.cf, isEdit = mode === 'edit';
+  const names = new Set(activeCats().map(c => c.n));
+  const presets = PRESETS.filter(p => !names.has(p.n) && !D.cats.some(c => c.id === p.id && !c.off));
+  const showForm = isEdit || d.src === 'custom' || d.p;
+  const homeFull = homeCount() >= MAX_HOME && !(isEdit && D.home.includes(d.id));
+  const n = d.n.trim(), dup = activeCats().some(c => c.n === n && c.id !== d.id);
+  full2.innerHTML = `<div class="backbar"><button type="button" class="iconbtn" data-act="cf-close" aria-label="返回">${ico('back')}</button><h2>${isEdit ? '修改分類' : '新增分類'}</h2>${isEdit ? '' : `<span class="count" style="padding-right:8px">${activeCats().length}/${MAX_CATS}</span>`}</div>
+  <div class="view"><div class="pad" style="gap:10px">
+    ${isEdit ? '' : `<div class="seg wide" role="group" aria-label="怎麼新增"><button type="button" data-cfsrc="preset" aria-pressed="${d.src === 'preset'}">從預設挑</button><button type="button" data-cfsrc="custom" aria-pressed="${d.src === 'custom'}">自己建</button></div>`}
+    ${!isEdit && d.src === 'preset' && !d.p ? `<p class="note-p">挑一個，圖案和顏色已經配好，還可以再改。</p>
+      ${presets.length ? `<div class="grid4">${presets.map(p => `<button type="button" class="tile" data-cfpreset="${p.id}">${dotHTML({...p, c:freeColor(p.c)})}${p.n}</button>`).join('')}</div>` : '<p class="note-p">預設的都加過了，可以自己建。</p>'}` : ''}
+    ${!isEdit && d.src === 'preset' && d.p ? `<div class="picked">${dotHTML(d)}<b>從預設挑了「${PRESETS.find(p => p.id === d.p).n}」</b><button type="button" class="textbtn" data-act="cf-repick">換一個</button></div>` : ''}
+    ${showForm ? `
+    <div class="cpreview">${dotHTML(d)}<span><b id="cf-pv">${esc(n || '分類名稱')}</b><span>${d.w ? '想花才花 · 晚上會抽問' : '必要的 · 不會抽問'}</span></span></div>
+    <label class="flabel" for="cf-n">名字</label>
+    <input class="tinput" id="cf-n" type="text" maxlength="5" autocomplete="off" placeholder="最多 5 個字，例如 寵物" value="${esc(d.n)}" aria-describedby="cf-dup">
+    ${isEdit ? '<p class="note-p">改名字後，以前記的帳也會顯示新名字。</p>' : ''}
+    <p class="note-p" id="cf-dup" role="status" style="color:var(--text);font-weight:600" ${dup ? '' : 'hidden'}>已經有同名的分類了，換個名字。</p>
+    <div class="flabel">顏色</div>
+    <div class="swatches" role="group" aria-label="顏色">${COLORS.map(([k, l]) => { const who = activeCats().filter(c => c.c === k && c.id !== d.id).map(c => c.n);
+      return `<button type="button" class="swc" style="background:var(--c-${k})" data-cfcolor="${k}" aria-pressed="${d.c === k}" aria-label="${l}${who.length ? `，${esc(who.join('、'))}已經在用` : ''}">${ico('check')}${who.length ? '<span class="used"></span>' : ''}</button>`; }).join('')}</div>
+    ${(() => { const who = activeCats().filter(c => c.c === d.c && c.id !== d.id).map(c => c.n); return who.length ? `<p class="swnote">跟「${esc(who.join('、'))}」同色，圓圈上會不好分。有小灰點的顏色已經有人用了。</p>` : '<p class="swnote">有小灰點的顏色已經有人用了。</p>'; })()}
+    <div class="flabel">圖案</div>
+    <div class="icons" role="group" aria-label="圖案">${ICON_PICK.map(k => `<button type="button" class="ib" data-cficon="${k}" aria-pressed="${d.i === k}" aria-label="圖案：${ICON_NAME[k] || k}">${ico(k)}</button>`).join('')}</div>
+    <div class="flabel">這類的錢是</div>
+    <button type="button" class="kopt" data-cfkind="need" aria-pressed="${!d.w}"><span class="rd"></span><span><b>必要的</b><span>例如房租、看醫生。不會被問值不值得。</span></span></button>
+    <button type="button" class="kopt" data-cfkind="want" aria-pressed="${d.w}"><span class="rd"></span><span><b>想花才花</b><span>例如飲料、購物。晚上回顧時會抽幾筆問你值不值得。</span></span></button>
+    <button type="button" class="tgrow" data-act="cf-home" aria-pressed="${d.onHome}" ${homeFull ? 'disabled' : ''}><span>放到首頁<span>${homeFull ? `首頁已經滿了（${MAX_HOME}/${MAX_HOME}）` : isEdit && D.home.includes(d.id) ? '現在在首頁上' : `首頁還有 ${MAX_HOME - homeCount()} 個空位`}</span></span><span class="tg"></span></button>
+    ${homeFull && !S.homeEdit ? '<button type="button" class="linkbtn" data-act="home-edit" style="justify-self:start">到編輯首頁拿下一個</button>' : ''}
+    ${isEdit ? `<div class="cfdanger"><button type="button" class="btn ghost" data-act="cf-off">收起這個分類</button><p class="center-note">收起後記帳時看不到，以前記的帳都還在，可以在設定裡找回來。</p></div>` : ''}
+    <div class="stickybar">
+      <button type="button" class="btn" id="cf-save" data-act="cf-save" ${n && !dup ? '' : 'disabled'}>${isEdit ? '儲存' : '新增'}</button>
+    </div>` : ''}
+  </div></div>`;
+  if (focus) { const el = $('cf-n'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
+}
+function saveCatForm(){
+  const {mode, d, slot} = S.cf, n = d.n.trim();
+  if (!n || activeCats().some(c => c.n === n && c.id !== d.id)) return;
+  if (mode === 'edit') {
+    Object.assign(D.cats.find(c => c.id === d.id), {n, i:d.i, c:d.c, w:d.w});
+    const ix = D.home.indexOf(d.id);
+    if (!d.onHome && ix >= 0) D.home[ix] = null;
+    if (d.onHome && ix < 0) { const e = D.home.indexOf(null); if (e >= 0) D.home[e] = d.id; }
+    toast(`已更新「${n}」`);
+  } else {
+    if (activeCats().length >= MAX_CATS) return toast('已經 24 個分類了，先收起不用的');
+    // 預設的分類以前收起來過，就直接拿回來用同一個代號，舊的帳會接上
+    const old = d.p && D.cats.find(c => c.id === d.p);
+    let c;
+    if (old) { Object.assign(old, {n, i:d.i, c:d.c, w:d.w, off:false}); c = old; }
+    else { c = {id:d.p && !D.cats.some(x => x.id === d.p) ? d.p : 'c' + uid(), n, i:d.i, c:d.c, w:d.w}; D.cats.push(c); }
+    let where = '';
+    if (d.onHome) { const i = slot != null && !D.home[slot] ? slot : D.home.indexOf(null); if (i >= 0) { D.home[i] = c.id; where = '，也放到首頁了'; } }
+    toast(`新增了「${n}」${where}`);
+  }
+  closeCatForm(); afterCatChange();
 }
 
 /* ===== 設定 ===== */
@@ -593,11 +930,17 @@ function settings(){
     <div class="h3">預算</div>
     <div class="panel"><button type="button" class="setrow" data-act="budget"><div>月預算<br><span>${D.budget == null ? '還沒設定' : `扣掉每月固定支出 NT$ ${fmt(fm)} 後，可以花 NT$ ${fmt(D.budget - fm)}`}</span></div><b>${D.budget == null ? '設定' : 'NT$ ' + fmt(D.budget)}</b></button></div>
     <div class="h3">固定收支</div>
-    <div class="panel">${D.fixed.length ? D.fixed.map(f => `<button type="button" class="setrow" data-fixed="${f.id}"><div>${esc(f.n)}<br><span>${fixedWhen(f)} · ${catOf(f.c).n}</span></div><b>${f.type === 'in' ? '+' : ''}NT$ ${fmt(f.a)}</b></button>`).join('') : '<p class="note-p" style="padding:12px 0">還沒有固定收支，例如房租、手機月租、薪水。</p>'}</div>
+    <div class="panel">${D.fixed.length ? D.fixed.map(f => `<button type="button" class="setrow" data-fixed="${f.id}"><div>${esc(f.n)}<br><span>${fixedWhen(f)} · ${esc(catOf(f.c).n)}</span></div><b>${f.type === 'in' ? '+' : ''}NT$ ${fmt(f.a)}</b></button>`).join('') : '<p class="note-p" style="padding:12px 0">還沒有固定收支，例如房租、手機月租、薪水。</p>'}</div>
     <div style="padding-top:8px"><button type="button" class="btn ghost" data-act="fixed-new">新增固定收支</button></div>
+    <div class="h3">分類</div>
+    <div class="panel">
+      <button type="button" class="setrow" data-act="all-cats"><div>全部分類<br><span>新增、改名字、換圖案和顏色</span></div><b class="num">${activeCats().length}/${MAX_CATS}</b></button>
+      <button type="button" class="setrow" data-act="home-edit"><div>編輯首頁<br><span>圓圈旁邊 8 格放哪些分類</span></div><b class="num">${homeCount()}/${MAX_HOME}</b></button>
+      ${D.cats.filter(c => c.off).map(c => `<button type="button" class="setrow" data-restore="${c.id}"><div style="display:flex;align-items:center;gap:10px"><span class="cic" style="width:32px;height:32px;border-radius:10px;display:grid;place-content:center;color:var(--on-cat);background:var(--c-${c.c})">${ico(c.i)}</span><div>${esc(c.n)}<br><span>收起來了，以前的帳還在</span></div></div><b style="color:var(--primary-ink)">找回來</b></button>`).join('')}
+    </div>
     <div class="h3">常用項目</div>
     <p class="note-p">記帳時，分類下面會出現這些按鈕，一點就帶入項目。會依你最常記的自動排序。</p>
-    <div class="panel">${D.items.map((it, i) => `<button type="button" class="setrow" data-itemedit="${i}"><div>${esc(it.n)}<br><span>${catOf(it.c).n}</span></div>${ico('chev')}</button>`).join('')}</div>
+    <div class="panel">${D.items.map((it, i) => `<button type="button" class="setrow" data-itemedit="${i}"><div>${esc(it.n)}<br><span>${esc(catOf(it.c).n)}</span></div>${ico('chev')}</button>`).join('')}</div>
     <div style="padding-top:8px"><button type="button" class="btn ghost" data-act="item-new">新增常用項目</button></div>
     <div class="h3">其他</div>
     <div class="panel">
@@ -617,23 +960,24 @@ function budgetSheet(){
     <button type="button" class="btn" data-act="budget-save">儲存</button>`);
 }
 function fixedSheet(id, draft){
-  const f = draft || (id ? D.fixed.find(x => x.id === id) : {n:'', a:'', type:'out', c:'home', freq:'month', day:1, month:1});
+  const f = draft || (id ? D.fixed.find(x => x.id === id) : {n:'', a:'', type:'out', c:defaultFixedCat(), freq:'month', day:1, month:1});
   S.fx = {id, type:f.type, freq:f.freq};
-  const cats = f.type === 'in' ? INCATS : CATS;
+  const cats = f.type === 'in' ? INCATS : activeCats().concat(f.type === 'out' && catOf(f.c).off ? [catOf(f.c)] : []);
   openSheet(`${head(id ? '修改固定收支' : '新增固定收支')}
     <div class="seg" role="group" aria-label="支出或收入"><button type="button" data-fxtype="out" aria-pressed="${f.type === 'out'}">支出</button><button type="button" data-fxtype="in" aria-pressed="${f.type === 'in'}">收入</button></div>
     <div class="field2"><label class="field">名稱<input id="fx-n" type="text" value="${esc(f.n)}" placeholder="${f.type === 'in' ? '薪水' : '房租'}"></label><label class="field">金額<input id="fx-a" type="number" inputmode="numeric" min="1" value="${f.a}"></label></div>
-    <label class="field">分類<select id="fx-c">${cats.map(c => `<option value="${c.id}" ${c.id === f.c ? 'selected' : ''}>${c.n}</option>`).join('')}</select></label>
+    <label class="field">分類<select id="fx-c">${cats.map(c => `<option value="${c.id}" ${c.id === f.c ? 'selected' : ''}>${esc(c.n)}</option>`).join('')}</select></label>
     <div class="seg" role="group" aria-label="多久一次"><button type="button" data-fxfreq="month" aria-pressed="${f.freq !== 'year'}">每月</button><button type="button" data-fxfreq="year" aria-pressed="${f.freq === 'year'}">每年</button></div>
     <div class="field2">${f.freq === 'year' ? `<label class="field">幾月<input id="fx-m" type="number" inputmode="numeric" min="1" max="12" value="${f.month}"></label>` : ''}<label class="field">幾號<input id="fx-d" type="number" inputmode="numeric" min="1" max="31" value="${f.day}"></label></div>
     <p class="note-p">時間到會自動記一筆。${f.freq === 'year' ? '每年的會在扣款那個月從可以花的錢裡扣掉；金額大的，前一個月首頁會提醒。' : '每月的會在月初就從可以花的錢裡扣掉。'}遇到 31 號這種日期，小月會記在月底。</p>
     <div class="acts"><button type="button" class="btn" data-act="fixed-save">儲存</button>${id ? '<button type="button" class="btn danger" data-act="fixed-del">刪除</button>' : ''}</div>`);
 }
 // 切換支出／收入、每月／每年時，保留已經填的字
+function defaultFixedCat(){ const a = activeCats(); return (a.find(c => c.id === 'home') || a[0] || FALLBACK).id; }
 function fixedSheetRefresh(type, freq){
-  const c = $('fx-c').value, list = type === 'in' ? INCATS : CATS;
+  const c = $('fx-c').value, list = type === 'in' ? INCATS : activeCats();
   fixedSheet(S.fx.id, {n:$('fx-n').value, a:$('fx-a').value, type, freq, day:$('fx-d').value || 1, month:$('fx-m') ? $('fx-m').value : 1,
-    c: list.some(x => x.id === c) ? c : (type === 'in' ? 'salary' : 'home')});
+    c: list.some(x => x.id === c) ? c : (type === 'in' ? 'salary' : defaultFixedCat())});
 }
 function fixedSave(){
   const n = $('fx-n').value.trim(), a = Math.round(+$('fx-a').value), day = Math.round(+$('fx-d').value), month = $('fx-m') ? Math.round(+$('fx-m').value) : 1;
@@ -650,11 +994,11 @@ function fixedSave(){
 }
 function afterFixedChange(){ if (S.ob) onboard(); else { render(); settings(); } }
 function itemSheet(i){
-  const it = i == null ? {n:'', c:'food'} : D.items[i];
+  const it = i == null ? {n:'', c:(activeCats()[0] || FALLBACK).id} : D.items[i];
   S.itEdit = i;
   openSheet(`${head(i == null ? '新增常用項目' : '修改常用項目')}
     <label class="field">名稱<input id="it-n" type="text" value="${esc(it.n)}" placeholder="例如 早午餐"></label>
-    <label class="field">分類<select id="it-c">${CATS.map(c => `<option value="${c.id}" ${c.id === it.c ? 'selected' : ''}>${c.n}</option>`).join('')}</select></label>
+    <label class="field">分類<select id="it-c">${activeCats().concat(catOf(it.c).off ? [catOf(it.c)] : []).map(c => `<option value="${c.id}" ${c.id === it.c ? 'selected' : ''}>${esc(c.n)}</option>`).join('')}</select></label>
     <div class="acts"><button type="button" class="btn" data-act="item-save">儲存</button>${i == null ? '' : '<button type="button" class="btn danger" data-act="item-del">刪除</button>'}</div>`);
 }
 function helpPage(){
@@ -732,6 +1076,7 @@ function render(opts = {}){
 const app = $('app');
 app.addEventListener('click', ev => {
   const t = ev.target.closest('button,[data-act]'); if (!t || !app.contains(t) || t.disabled) return;
+  if (t.closest('.eslot.filled') && !t.classList.contains('x')) return;
   const d = t.dataset;
   if (d.tab) { S.tab = d.tab; closeFull(); return render({resetScroll:true}); }
   if (d.key) return pressKey(d.key);
@@ -744,13 +1089,50 @@ app.addEventListener('click', ev => {
   if (d.fxtype) return fixedSheetRefresh(d.fxtype, S.fx.freq);
   if (d.fxfreq) return fixedSheetRefresh(S.fx.type, d.fxfreq);
   if (d.itemedit !== undefined) return itemSheet(+d.itemedit);
+  if (d.slot !== undefined) return pickSheet(+d.slot);
+  if (d.place) { D.home[S.pendingSlot] = d.place; S.pendingSlot = null; closeSheet(); afterCatChange(); return toast(`「${catOf(d.place).n}」放到首頁了`); }
+  if (d.catedit) return catForm('edit', d.catedit);
+  if (d.restore) {
+    if (activeCats().length >= MAX_CATS) return toast('已經 24 個分類了，先收起不用的');
+    const c = catOf(d.restore); c.off = false; afterCatChange(); return toast(`「${c.n}」找回來了`);
+  }
+  if (d.eslot !== undefined && t.classList.contains('empty')) return tapSlot(+d.eslot);
+  if (d.unhome !== undefined) { const c = catOf(D.home[+d.unhome]); D.home[+d.unhome] = null; S.homeSel = +d.unhome; afterCatChange(); return toast(`「${c.n}」不放首頁了`, () => { if (!D.home[+d.unhome]) { D.home[+d.unhome] = c.id; S.homeSel = null; afterCatChange(); } }); }
+  if (d.pool) { const i = S.homeSel != null && !D.home[S.homeSel] ? S.homeSel : D.home.indexOf(null); if (i < 0) return; D.home[i] = d.pool; S.homeSel = null; return afterCatChange(); }
+  if (d.cfsrc) { S.cf.d = {src:d.cfsrc, p:null, n:'', i:'other', c:freeColor(), w:true, onHome:S.cf.d.onHome}; return renderCatForm(d.cfsrc === 'custom'); }
+  if (d.cfpreset) { const p = PRESETS.find(x => x.id === d.cfpreset); Object.assign(S.cf.d, {p:p.id, n:p.n, i:p.i, c:freeColor(p.c), w:p.w}); return renderCatForm(); }
+  if (d.act === 'cf-repick') { S.cf.d.p = null; return renderCatForm(); }
+  if (d.cfcolor) { S.cf.d.c = d.cfcolor; return renderCatForm(); }
+  if (d.cficon) { S.cf.d.i = d.cficon; return renderCatForm(); }
+  if (d.cfkind) { S.cf.d.w = d.cfkind === 'want'; return renderCatForm(); }
   switch (d.act) {
     case 'save': return saveEntry();
     case 'add-income': return openEntry('in', 'salary');
     case 'list-toggle': S.listOpen = !S.listOpen; return render();
     case 'settings': return settings();
     case 'close-sheet': return closeSheet();
-    case 'close-full': return closeFull();
+    case 'close-full': {
+      S.homeEditShown = false;
+      if (S.homeEdit && S.fromSettings) { S.fromSettings = false; S.homeEdit = false; render(); return settings(); }   // 從設定進來的，完成後回到設定
+      closeFull(); return render();
+    }
+    case 'all-cats': return allCatsSheet(false);
+    case 'intro-ok': D.catsIntro = false; save(); render(); return;
+    case 'intro-edit': D.catsIntro = false; save(); render(); S.fromSettings = false; S.homeSel = null; S.homeEditShown = false; return homeEdit();
+    case 'sug-yes': { const id = d.sid, i = +d.sslot, was = catOf(D.home[i]); D.home[i] = id; D.sugNo.push(id); save(); render();
+      return toast(`「${catOf(id).n}」換上首頁了，「${was.n}」放到全部分類`, () => { D.home[i] = was.id; save(); render(); }); }
+    case 'sug-no': D.sugNo.push(d.sid); save(); render(); return toast('好，之後不會再建議這個分類');
+    case 'cats-manage': return allCatsSheet(!S.manage);
+    case 'home-edit': {
+      if (full2.classList.contains('on')) closeCatForm(); S.fromSettings = full.classList.contains('on') && !S.homeEdit; if (sheet.classList.contains('on')) closeSheet(); S.homeSel = null; S.homeEditShown = false; return homeEdit(); }
+    case 'cat-new': { const fromPick = S.catSheet === 'pick' && sheet.classList.contains('on'); return catForm('new', null, fromPick ? {onHome:true, slot:S.pendingSlot} : {onHome:S.homeEdit && homeCount() < MAX_HOME, slot:S.homeEdit ? S.homeSel : null}); }
+    case 'cf-close': return closeCatForm();
+    case 'cf-home': S.cf.d.onHome = !S.cf.d.onHome; return renderCatForm();
+    case 'cf-save': return saveCatForm();
+    case 'cf-off': {
+      const c = D.cats.find(x => x.id === S.cf.d.id); c.off = true; D.home = D.home.map(x => x === c.id ? null : x);
+      closeCatForm(); afterCatChange(); return toast(`「${c.n}」收起來了，以前的帳還在`, () => { c.off = false; afterCatChange(); });
+    }
     case 'm-prev': if (--S.listM < 0) { S.listM = 11; S.listY--; } return render({resetScroll:true});
     case 'm-next': if (++S.listM > 11) { S.listM = 0; S.listY++; } return render({resetScroll:true});
     case 'edit-save': {
@@ -829,11 +1211,18 @@ function onInput(e){
   }
   if (e.target.id === 'ob-budget' && $('ob-spend')) $('ob-spend').textContent = fmt(Math.max((Math.round(+e.target.value) || 0) - monthlyFixedOut(), 0));
   if (e.target.id === 'listq') { S.listQ = e.target.value; render({focus:'listq'}); }
+  if (e.target.id === 'cf-n' && S.cf) {
+    const d = S.cf.d; d.n = e.target.value; const n = d.n.trim(), dup = activeCats().some(c => c.n === n && c.id !== d.id);
+    $('cf-pv').textContent = n || '分類名稱'; $('cf-dup').hidden = !dup; $('cf-save').disabled = !n || dup;
+  }
 }
 app.addEventListener('input', onInput);
 app.addEventListener('compositionend', e => onInput({target:e.target, isComposing:false}));
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { if (sheet.classList.contains('on')) closeSheet(); else if (full.classList.contains('on') && !S.ob) closeFull(); return; }
+  if (e.key === 'Escape') { if (sheet.classList.contains('on')) closeSheet(); else if (full2.classList.contains('on')) closeCatForm(); else if (full.classList.contains('on') && !S.ob) { closeFull(); render(); } return; }
+  if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.matches?.('.ringwrap .center')) { e.preventDefault(); return allCatsSheet(false); }
+  // 編輯首頁：用鍵盤在分類上按 Enter 或空白鍵，跟點一下一樣（選起來／交換）
+  if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.matches?.('.eslot.filled')) { e.preventDefault(); const i = +document.activeElement.dataset.eslot; tapSlot(i); setTimeout(() => document.querySelector(`.eslot[data-eslot="${i}"]`)?.focus(), 0); return; }
   // 記帳面板打開時可以直接用鍵盤：數字輸入金額、Backspace 刪一位、Enter 記一筆（正在打字的欄位不攔截）
   const typing = document.activeElement && /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
   if (!S.entry || typing) return;
@@ -854,7 +1243,16 @@ const added0 = runFixed();
 render();
 if (!D.setupDone) { S.ob = {step:1, salary:0, payday:5, savings:0, budget:0}; onboard(); }
 else if (added0.length) toast(`已自動記下「${added0[0].n}」NT$ ${fmt(added0[0].a)}${added0.length > 1 ? ` 等 ${added0.length} 筆` : ''}`);
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+// 新版下載好了就提示，不用等下次打開（第一次安裝不提示）
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const w = reg.installing; if (!w || !navigator.serviceWorker.controller) return;
+      w.addEventListener('statechange', () => { if (w.state === 'activated') toast('有新版本了', () => location.reload(), '點一下更新', 600000); });
+    });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
+  }).catch(() => {});
+}
 </script>
 </body>
 </html>

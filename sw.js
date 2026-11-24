@@ -1,6 +1,6 @@
 // 小銅板：離線也能打開。先用快取裡的畫面，背景再抓新版，下次打開就是新版。
 // 改了 App 檔案要上線時，把版本號加一，舊快取才會清掉。
-const CACHE = 'coinlet-v4';
+const CACHE = 'coinlet-v5';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
